@@ -1,0 +1,44 @@
+class LeadSale:
+    def __init__(self, id, sale_date, value, seller_id):
+        self._id = id
+        self._sale_date = sale_date
+        self._value = value
+        self._seller_id = seller_id
+        
+    
+    @property
+    def id(self):
+        return self._id
+    
+    @id.setter
+    def id(self, id):
+        self._id = id
+        
+    
+    @property
+    def sale_date(self):
+        return self._sale_date
+    
+    @sale_date.setter
+    def sale_date(self, sale_date):
+        self._sale_date = sale_date
+        
+    
+    @property
+    def value(self):
+        return self._value
+    
+    @value.setter
+    def value(self, value):
+        self._value = value
+        
+    
+    @property
+    def seller_id(self):
+        return self._seller_id
+    
+    @seller_id.setter
+    def seller_id(self, seller_id):
+        self._seller_id = seller_id
+        
+    
