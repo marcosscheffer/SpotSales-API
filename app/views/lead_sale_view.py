@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import request
 from datetime import datetime
 
-from ..extensions import api
+from ..extensions import api_v1
 from ..services.lead_sale_service import (get_leads_sales_service, register_lead_sale_service, 
                                           get_lead_sale_by_id_service)
 from ..schemas.lead_sale_schema import LeadSaleSchema
@@ -46,5 +46,5 @@ class LeadSaleView(Resource):
         return lss.dump(lead_sale), 200
         
     
-api.add_resource(LeadsSalesView, '/leadsSales')
-api.add_resource(LeadSaleView, '/leadsSales/<int:id>')
+api_v1.add_resource(LeadsSalesView, '/leadsSales')
+api_v1.add_resource(LeadSaleView, '/leadsSales/<int:id>')

@@ -1,6 +1,7 @@
 from .base_model import BaseModel
 from ..extensions import db
 from .lead_sale_model import LeadSaleModel
+from .checklist_model import ChecklistModel
 
 
 class SellerModel(BaseModel):
@@ -11,4 +12,5 @@ class SellerModel(BaseModel):
     email = db.Column(db.String(255), nullable=False)
     
     sales = db.relationship(LeadSaleModel, backref='seller', lazy=True)
+    checklists = db.relationship(ChecklistModel, backref='seller', lazy=True)
     
