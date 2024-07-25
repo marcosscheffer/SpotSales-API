@@ -10,8 +10,8 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         fields = ('id', 'name', 'position_id')
     
     name = fields.String(required=True)
-    email = fields.Email(required=True)
-    cpf = fields.String(required=True)
-    password = fields.String(required=True)
+    email = fields.Email(required=True, load_only=True)
+    cpf = fields.String(required=True, load_only=True)
+    password = fields.String(required=True, load_only=True)
     position_id = fields.Int(required=True)
         

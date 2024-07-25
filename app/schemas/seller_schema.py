@@ -7,10 +7,10 @@ class SellerSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = SellerModel
         load_instance = True
-        fields = ('id', 'first_name', 'last_name')
+        fields = ('id', 'first_name', 'email', 'last_name')
     
     id = fields.Int(required=True)
     first_name = fields.String(required=True)
     last_name = fields.String(required=True)
-    email = fields.Email(required=True)
+    email = fields.Email(required=True, load_only=True)
     

@@ -13,6 +13,7 @@ from .models.position_model import PositionModel
 from .views.lead_sale_view import LeadsSalesView, LeadSaleView
 from .views.seller_view import SellersView, SellerView
 from .views.slack_view import SendFilesView, SendMessageView
+from .views.position_view import PositionsView, PositionView
 
 
 def create_app(config):
