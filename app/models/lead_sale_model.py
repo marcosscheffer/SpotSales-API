@@ -1,5 +1,8 @@
+from datetime import datetime
+
 from .base_model import BaseModel
 from ..extensions import db
+
 
 
 class LeadSaleModel(BaseModel):
@@ -9,5 +12,4 @@ class LeadSaleModel(BaseModel):
     value = db.Column(db.Float, nullable=False)
     
     seller_id = db.Column(db.Integer, db.ForeignKey('sellers.id'), nullable=False)
-    
     

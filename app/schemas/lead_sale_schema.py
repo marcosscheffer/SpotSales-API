@@ -1,14 +1,15 @@
 from marshmallow import fields
 
 from ..extensions import ma
-from ..models.seller_model import SellerModel
+from ..models.lead_sale_model import LeadSaleModel
 
-class SellerSchema(ma.SQLAlchemyAutoSchema):
-    model = SellerModel
-    load_instance = True
-    fields = ('id', 'sale_date', 'value', 'created_at', 'updated_at', 'active')
+class LeadSaleSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = LeadSaleModel
+        load_instance = True
+        
     
     id = fields.Int(required=True)
     sale_date = fields.DateTime(required=True)
     value = fields.Float(required=True)
-    
+    seller_id = fields.Int(required=True)

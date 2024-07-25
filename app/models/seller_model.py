@@ -1,6 +1,6 @@
 from .base_model import BaseModel
 from ..extensions import db
-from . import lead_sale_model
+from .lead_sale_model import LeadSaleModel
 
 
 class SellerModel(BaseModel):
@@ -10,5 +10,5 @@ class SellerModel(BaseModel):
     last_name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
     
-    sales = db.relationship(lead_sale_model, backref='seller', lazy=True)
+    sales = db.relationship(LeadSaleModel, backref='seller', lazy=True)
     
