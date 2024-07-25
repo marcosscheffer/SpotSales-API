@@ -11,7 +11,7 @@ class UserModel(BaseModel):
     cpf = db.Column(db.String(11), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
 
-    Position_id = db.Column(db.Integer, db.ForeignKey("positions.id"), nullable=False)
+    position_id = db.Column(db.Integer, db.ForeignKey("positions.id"), nullable=False)
     
     
     def encrypt_password(self):

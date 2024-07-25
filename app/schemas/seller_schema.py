@@ -7,7 +7,7 @@ class SellerSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = SellerModel
         load_instance = True
-        
+        fields = ('id', 'first_name', 'last_name')
     
     id = fields.Int(required=True)
     first_name = fields.String(required=True)
