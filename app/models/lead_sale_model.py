@@ -1,8 +1,5 @@
-from datetime import datetime
-
 from .base_model import BaseModel
 from ..extensions import db
-
 
 
 class LeadSaleModel(BaseModel):

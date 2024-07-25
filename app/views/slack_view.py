@@ -63,7 +63,7 @@ class SendFilesView(Resource):
         return {"message": "file not sent", 
                 "error": response["error"]} 
 
-class SendPdfChecklist(Resource):
+class SlackEvent(Resource):
     def post(self):
         ...
 

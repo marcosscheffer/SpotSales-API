@@ -1,10 +1,13 @@
 from flask import Flask
-from .extensions import api_v1, db, ma, migrate
+
+from .extensions import api_v1, db, ma, migrate, jwt
 
 # add Models
 from .models.lead_sale_model import LeadSaleModel
 from .models.seller_model import SellerModel
 from .models.checklist_model import ChecklistModel
+from .models.user_model import UserModel
+from .models.position_model import PositionModel
 
 # Add Resources
 from .views.lead_sale_view import LeadsSalesView, LeadSaleView
@@ -20,5 +23,6 @@ def create_app(config):
     db.init_app(app)
     ma.init_app(app)
     migrate.init_app(app, db)
+    jwt.init_app(app)
     
     return app
