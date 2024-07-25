@@ -26,7 +26,16 @@ class SellersView(Resource):
         response = register_seller_service(seller)
         
         return ss.dump(response), 201
+    
+class SellerView(Resource):
+    def get(self, id):
+        seller = get_seller_by_id_service(id)
+        if not seller:
+            return "Not Found - No Seller", 404
+        ss = SellerSchema()
+        return ss.dump(seller), 200
  
     
 api.add_resource(SellersView, '/sellers')
+api.add_resource(SellerView, '/sellers/<int:id>')
         

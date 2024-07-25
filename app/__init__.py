@@ -5,7 +5,8 @@ from .models import SellerModel, LeadSaleModel
 
 # Add Resources
 from .views.lead_sale_view import LeadsSalesView, LeadSaleView
-from .views.seller_view import SellersView
+from .views.seller_view import SellersView, SellerView
+from .views.slack_view import send_message_view
 
 
 def create_app(config):

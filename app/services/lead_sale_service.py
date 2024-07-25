@@ -6,7 +6,7 @@ from ..entities import lead_sale
 def get_leads_sales_service():
     return LeadSaleModel.query.all()
 
-def get_lead_sale_by_id_service(id):
+def get_lead_sale_by_id_service(id: int):
     return LeadSaleModel.query.get(id)
 
 def register_lead_sale_service(data: lead_sale):
