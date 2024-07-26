@@ -1,4 +1,5 @@
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required
 from flask import request
 
 from ..extensions import api_v1
@@ -7,13 +8,16 @@ from ..services.position_service import (get_positions_service, get_position_by_
 from ..schemas.position_schema import PositionSchema
 from ..entities.position import Position
 
+
 class PositionsView(Resource):
+    @jwt_required()
     def get(self):
         positions = get_positions_service()
         ps = PositionSchema(many=True)
         response = ps.dump(positions)
         return response, 200
     
+    @jwt_required()
     def post(self):
         ps = PositionSchema()
         validate = ps.validate(request.json)
@@ -26,6 +30,7 @@ class PositionsView(Resource):
         return ps.dump(response), 201
     
 class PositionView(Resource):
+    @jwt_required()
     def get(self, id):
         position = get_position_by_id_service(id)
         if not position:

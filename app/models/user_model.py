@@ -10,6 +10,7 @@ class UserModel(BaseModel):
     email = db.Column(db.String(255), unique=True, nullable=False)
     cpf = db.Column(db.String(11), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
+    active = db.Column(db.Boolean, default=False)
 
     position_id = db.Column(db.Integer, db.ForeignKey("positions.id"), nullable=False)
     

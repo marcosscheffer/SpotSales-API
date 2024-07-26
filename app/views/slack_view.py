@@ -3,6 +3,7 @@ from slack_sdk import WebClient
 from slack_sdk.signature import SignatureVerifier
 from flask import request
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required
 import os
 
 from ..extensions import api_v1
@@ -17,6 +18,7 @@ signature_verifier = SignatureVerifier(signing_secret=signing_secret)
 
 
 class SendMessageView(Resource):
+    @jwt_required()
     def post(self):
         sms = SendMessageSchema()
         validate = sms.validate(request.json)
@@ -39,6 +41,7 @@ class SendMessageView(Resource):
     
 
 class SendFilesView(Resource):
+    @jwt_required()
     def post(self):
         sfs = SendFileSchema()
         validate = sfs.validate(request.form)

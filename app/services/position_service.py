@@ -2,6 +2,7 @@ from ..extensions import db
 from ..models.position_model import PositionModel
 from ..entities.position import Position
 
+
 def get_positions_service():
     return PositionModel.query.all()
 

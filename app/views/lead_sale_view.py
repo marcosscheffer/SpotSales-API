@@ -1,4 +1,5 @@
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required
 from flask import request
 from datetime import datetime
 
@@ -10,12 +11,13 @@ from ..entities.lead_sale import LeadSale
 
 
 class LeadsSalesView(Resource):
+    @jwt_required()
     def get(self):
         leads_sales = get_leads_sales_service()
         lss = LeadSaleSchema(many=True)
         response = lss.dump(leads_sales)
         return response, 200
-    
+    @jwt_required()
     def post(self):
         lss = LeadSaleSchema()
         validate = lss.validate(request.json)
@@ -37,6 +39,7 @@ class LeadsSalesView(Resource):
     
 
 class LeadSaleView(Resource):
+    @jwt_required()
     def get(self, id):
         lead_sale = get_lead_sale_by_id_service(id)
         if not lead_sale:

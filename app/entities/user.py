@@ -1,10 +1,11 @@
 class User:
-    def __init__(self, name, email, cpf, password, position_id):
+    def __init__(self, name, email, cpf, password, position_id, active=False):
         self._name = name
         self._email = email
         self._cpf = cpf
         self._password = password
         self._position_id = position_id
+        self._active = active
         
         
     @property
@@ -50,3 +51,12 @@ class User:
     @position_id.setter
     def position_id(self, position_id):
         self._position_id = position_id
+        
+        
+    @property
+    def active(self):
+        return self._active
+    
+    @active.setter
+    def active(self, active):
+        self._active = active

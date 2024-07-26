@@ -14,7 +14,9 @@ from .views.lead_sale_view import LeadsSalesView, LeadSaleView
 from .views.seller_view import SellersView, SellerView
 from .views.slack_view import SendFilesView, SendMessageView
 from .views.position_view import PositionsView, PositionView
-from .views.user_view import UserRegisterView
+from .views.user_auth_view import (UserRegisterView, UserLoginView, 
+                                   UserRefreshView)
+from .views.user_view import UserUpdateView
 
 
 def create_app(config):
