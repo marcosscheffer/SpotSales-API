@@ -1,8 +1,11 @@
-from marshmallow import fields
+from marshmallow import fields, validates, ValidationError
 
 from ..extensions import ma
-from ..models.checklist_model import ChecklistModel
 
+from ..models.checklist_model import ChecklistModel
+from ..models.seller_model import SellerModel
+
+from ..validations.foreign_validate import foreign_key_validate
 class ChecklistSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = ChecklistModel
@@ -39,3 +42,8 @@ class ChecklistSchema(ma.SQLAlchemyAutoSchema):
     # final
     other = fields.String(required=False)
     filled = fields.String(required=False)
+    
+    
+    @validates('seller_id')
+    def seller_id_validate(self, value):
+        foreign_key_validate(value, SellerModel)

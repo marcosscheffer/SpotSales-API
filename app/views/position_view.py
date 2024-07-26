@@ -3,7 +3,7 @@ from flask import request
 
 from ..extensions import api_v1
 from ..services.position_service import (get_positions_service, get_position_by_id_service, 
-                                         register_position_model)
+                                         register_position_service)
 from ..schemas.position_schema import PositionSchema
 from ..entities.position import Position
 
@@ -22,7 +22,7 @@ class PositionsView(Resource):
         
         data = request.get_json()
         position = Position(title=data["title"])
-        response = register_position_model(position)
+        response = register_position_service(position)
         return ps.dump(response), 201
     
 class PositionView(Resource):

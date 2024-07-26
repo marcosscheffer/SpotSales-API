@@ -1,4 +1,4 @@
-from marshmallow import fields
+from marshmallow import fields, fields
 
 from ..extensions import ma
 from ..models.position_model import PositionModel

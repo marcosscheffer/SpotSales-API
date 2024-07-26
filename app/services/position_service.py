@@ -8,7 +8,7 @@ def get_positions_service():
 def get_position_by_id_service(position_id: int):
     return PositionModel.query.get(position_id)
 
-def register_position_model(position: Position):
+def register_position_service(position: Position):
     position_db = PositionModel(title=position.title)
     db.session.add(position_db)
     db.session.commit()

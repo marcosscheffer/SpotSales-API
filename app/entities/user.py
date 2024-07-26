@@ -1,4 +1,4 @@
-class user:
+class User:
     def __init__(self, name, email, cpf, password, position_id):
         self._name = name
         self._email = email
