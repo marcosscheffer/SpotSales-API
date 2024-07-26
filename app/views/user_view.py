@@ -9,7 +9,7 @@ from ..entities.user import User
 
 class UserUpdateView(Resource):
     def put(self, id):
-        us = UserSchema()
+        us = UserSchema(context={'id': id})
         validate = us.validate(request.json)
         if validate:
             return validate, 400

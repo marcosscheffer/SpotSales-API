@@ -24,10 +24,20 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
     active = fields.Boolean(required=True)
     
     
+    @validates('email')
+    def email_validate(self, value):
+        instance_id = self.context.get('id', None)
+        unique_validate(value, UserModel, 'email', instance_id)
+        
+    
     @validates('cpf')
     def cpf_validate(self, value):
-        length_validate(value, 11, 11) 
+        instance_id = self.context.get('id', None)
+        length_validate(value, 11, 11)
+        unique_validate(value, UserModel, 'cpf', instance_id)
         
     @validates('position_id')
     def position_id_validate(self, value):
         foreign_key_validate(value, PositionModel)
+        
+        

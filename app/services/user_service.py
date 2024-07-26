@@ -8,11 +8,6 @@ def user_update_service(id: int, user: User):
     if not user_db:
         return {"error": "User not found"}
     
-    if UserModel.query.filter(UserModel.email == user.email, UserModel.id != id).first():
-        return {"error": "Email already exists"}
-    
-    if UserModel.query.filter(UserModel.cpf == user.cpf, UserModel.id != id).first():
-        return {"error": "CPF already exists"}
     
     user_db.name = user.name
     user_db.email = user.email
