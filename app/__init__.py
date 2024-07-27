@@ -29,4 +29,9 @@ def create_app(config):
     migrate.init_app(app, db)
     jwt.init_app(app)
     
+    # Register CLI commands
+    from .cli import user_cli
+    
+    app.cli.add_command(user_cli)
+    
     return app

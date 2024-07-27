@@ -2,9 +2,9 @@ from flask_restful import Resource
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask import request
 
-from ..extensions import api_v1
+from ..extensions import api_v1, jwt
 from ..services.user_auth_service import (user_register_service, user_login_service,
-                                     user_refresh_service)
+                                     user_refresh_service, get_user_by_id)
 from ..schemas.user_auth_schema import RegisterSchema, LoginSchema
 from ..entities.user import User
 
@@ -24,6 +24,23 @@ class UserRegisterView(Resource):
     
 
 class UserLoginView(Resource):
+    
+    @jwt.additional_claims_loader
+    def additional_claims_to_access_token(identity):
+        user_token = get_user_by_id(identity)
+        
+        if user_token.active and user_token.admin:
+            roles = 'admin'
+        elif user_token.active and user_token.bot:
+            roles = 'bot'
+        elif user_token.active:
+            roles = 'user'
+        else:
+            roles = 'Guest'
+        
+        return {'roles': roles}
+        
+    
     def post(self):
         ls = LoginSchema()
         validate = ls.validate(request.json)

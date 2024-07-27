@@ -33,6 +33,11 @@ def user_login_service(login, password):
 def user_refresh_service(identity):
     refreshed_token = gen_tokens(identity, 100)
     return {**refreshed_token, "message": "Refreshed token successfully"}
+
+
+def get_user_by_id(user_id):
+    return UserModel.query.get(user_id)
+
     
     
     

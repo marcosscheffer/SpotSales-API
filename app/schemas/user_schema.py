@@ -13,7 +13,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = UserModel
         load_instance = True
-        fields = ('id', 'name', 'email', 'cpf', 'password', 'position_id', 'active')
+        fields = ('id', 'name', 'email', 'cpf', 'password', 'position_id', 'active', 'admin', 'bot')
     
     
     name = fields.String(required=True)
@@ -22,6 +22,8 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
     password = fields.String(required=True, load_only=True)
     position_id = fields.Int(required=True)
     active = fields.Boolean(required=True)
+    admin = fields.Boolean(required=True)
+    bot = fields.Boolean(required=True)
     
     
     @validates('email')

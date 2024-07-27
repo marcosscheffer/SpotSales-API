@@ -17,6 +17,8 @@ def user_update_service(id: int, user: User):
         user_db.encrypt_password()
     user_db.position_id = user.position_id
     user_db.active = user.active
+    user_db.admin = user.admin
+    user_db.bot = user.bot
     db.session.commit()
     
     return user_db

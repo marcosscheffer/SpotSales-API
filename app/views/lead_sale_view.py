@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt
 from flask import request
 from datetime import datetime
 
@@ -13,12 +13,21 @@ from ..entities.lead_sale import LeadSale
 class LeadsSalesView(Resource):
     @jwt_required()
     def get(self):
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin', 'user']:
+            return "Unauthorized - Only admin and user can access", 401
+        
         leads_sales = get_leads_sales_service()
         lss = LeadSaleSchema(many=True)
         response = lss.dump(leads_sales)
         return response, 200
+    
     @jwt_required()
     def post(self):
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin', 'bot']:
+            return "Unauthorized - Only admin and user can access", 401
+        
         lss = LeadSaleSchema()
         validate = lss.validate(request.json)
         if validate:
@@ -41,6 +50,10 @@ class LeadsSalesView(Resource):
 class LeadSaleView(Resource):
     @jwt_required()
     def get(self, id):
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin', 'user']:
+            return "Unauthorized - Only admin and user can access", 401
+        
         lead_sale = get_lead_sale_by_id_service(id)
         if not lead_sale:
             return "Not Found - No Lead", 404

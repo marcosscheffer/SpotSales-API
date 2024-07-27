@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt
 from flask import request
 
 from ..extensions import api_v1
@@ -12,6 +12,10 @@ from ..entities.position import Position
 class PositionsView(Resource):
     @jwt_required()
     def get(self):
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin', 'user']:
+            return "Unauthorized - Only admin and user can access", 401
+        
         positions = get_positions_service()
         ps = PositionSchema(many=True)
         response = ps.dump(positions)
@@ -19,6 +23,10 @@ class PositionsView(Resource):
     
     @jwt_required()
     def post(self):
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin']:
+            return "Unauthorized - Only admin can access", 401
+        
         ps = PositionSchema()
         validate = ps.validate(request.json)
         if validate:
@@ -32,6 +40,10 @@ class PositionsView(Resource):
 class PositionView(Resource):
     @jwt_required()
     def get(self, id):
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin', 'user']:
+            return "Unauthorized - Only admin and user can access", 401
+        
         position = get_position_by_id_service(id)
         if not position:
             return "Not Found - No Position", 404

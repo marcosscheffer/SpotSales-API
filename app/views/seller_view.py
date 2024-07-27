@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt
 from flask import request
 
 from ..extensions import api_v1
@@ -12,12 +12,20 @@ from ..services.seller_service import (get_sellers_service, get_seller_by_id_ser
 class SellersView(Resource):
     @jwt_required()
     def get(self):
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin', 'user']:
+            return "Unauthorized - Only admin and user can access", 401
+        
         sellers = get_sellers_service()
         ss = SellerSchema(many=True)
         return ss.dump(sellers), 200
     
     @jwt_required()
     def post(self):
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin']:
+            return "Unauthorized - Only admin can access", 401
+        
         ss = SellerSchema()
         validate = ss.validate(request.json)
         if validate:
@@ -33,6 +41,10 @@ class SellersView(Resource):
 class SellerView(Resource):
     @jwt_required()
     def get(self, id):
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin', 'user']:
+            return "Unauthorized - Only user can access", 403
+        
         seller = get_seller_by_id_service(id)
         if not seller:
             return "Not Found - No Seller", 404

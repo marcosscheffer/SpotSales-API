@@ -1,11 +1,13 @@
 class User:
-    def __init__(self, name, email, cpf, password, position_id, active=False):
+    def __init__(self, name, email, cpf, password, position_id, active=False, admin=False, bot=False):
         self._name = name
         self._email = email
         self._cpf = cpf
         self._password = password
         self._position_id = position_id
         self._active = active
+        self._admin = admin
+        self._bot = bot
         
         
     @property
@@ -60,3 +62,21 @@ class User:
     @active.setter
     def active(self, active):
         self._active = active
+        
+        
+    @property
+    def admin(self):
+        return self._admin
+    
+    @admin.setter
+    def admin(self, admin):
+        self._admin = admin
+        
+    
+    @property
+    def bot(self):
+        return self._bot
+    
+    @bot.setter
+    def bot(self, bot):
+        self._bot = bot

@@ -11,6 +11,8 @@ class UserModel(BaseModel):
     cpf = db.Column(db.String(11), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     active = db.Column(db.Boolean, default=False)
+    admin = db.Column(db.Boolean, default=False, nullable=False)
+    bot = db.Column(db.Boolean, default=False, nullable=False)
 
     position_id = db.Column(db.Integer, db.ForeignKey("positions.id"), nullable=False)
     

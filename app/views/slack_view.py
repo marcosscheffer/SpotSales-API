@@ -3,7 +3,7 @@ from slack_sdk import WebClient
 from slack_sdk.signature import SignatureVerifier
 from flask import request
 from flask_restful import Resource
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt
 import os
 
 from ..extensions import api_v1
@@ -20,6 +20,10 @@ signature_verifier = SignatureVerifier(signing_secret=signing_secret)
 class SendMessageView(Resource):
     @jwt_required()
     def post(self):
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin', 'user', 'bot']:
+            return "Unauthorized - Only admin, user and bot can access", 401
+        
         sms = SendMessageSchema()
         validate = sms.validate(request.json)
         if validate:
@@ -43,6 +47,10 @@ class SendMessageView(Resource):
 class SendFilesView(Resource):
     @jwt_required()
     def post(self):
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin', 'user', 'bot']:
+            return "Unauthorized - Only admin, user and bot can access", 401
+        
         sfs = SendFileSchema()
         validate = sfs.validate(request.form)
         if validate:
