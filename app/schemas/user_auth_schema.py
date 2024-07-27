@@ -24,6 +24,9 @@ class RegisterSchema(ma.SQLAlchemyAutoSchema):
     password = fields.String(required=True, load_only=True)
     position_id = fields.Int(required=True)
     
+    @validates('name')
+    def name_validate(self, value):
+        length_validate(value, min_length=3)
     
     @validates('cpf')
     def cpf_validate(self, value):
@@ -33,6 +36,10 @@ class RegisterSchema(ma.SQLAlchemyAutoSchema):
     @validates('email')
     def email_validate(self, value):
         unique_validate(value, UserModel, 'email')
+        
+    @validates('password')
+    def password_validate(self, value):
+        length_validate(value, min_length=8)
         
     @validates('position_id')
     def position_id_validate(self, value):

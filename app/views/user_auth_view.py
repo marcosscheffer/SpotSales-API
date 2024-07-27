@@ -36,7 +36,7 @@ class UserLoginView(Resource):
         elif user_token.active:
             roles = 'user'
         else:
-            roles = 'Guest'
+            roles = 'guest'
         
         return {'roles': roles}
         

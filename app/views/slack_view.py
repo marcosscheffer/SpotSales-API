@@ -39,9 +39,9 @@ class SendMessageView(Resource):
 
         if response["success"]:
             return {"message": "Successfully sent message", 
-                    "ts": response["ts"]}
+                    "ts": response["ts"]}, 200
         return {"message": "message not sent", 
-                "error": response["error"]}
+                "error": response["error"]}, 500
     
 
 class SendFilesView(Resource):
@@ -70,13 +70,10 @@ class SendFilesView(Resource):
         
         if response["success"]:
             return {"message": "Successfully sent file", 
-                    "ts": response["ts"]}
+                    "ts": response["ts"]}, 200
         return {"message": "file not sent", 
-                "error": response["error"]} 
+                "error": response["error"]}, 500
 
-class SlackEvent(Resource):
-    def post(self):
-        ...
 
 api_v1.add_resource(SendMessageView, '/slack/send/message')
 api_v1.add_resource(SendFilesView, '/slack/send/file/upload')

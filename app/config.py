@@ -1,5 +1,6 @@
 class DevConfig:
     SECRET_KEY = '123124'
+    JWT_SECRET_KEY = "test_jwt_secret_key"
     SQLALCHEMY_DATABASE_NAME = 'development'
     SQLALCHEMY_DATABASE_USER = 'root'
     SQLALCHEMY_DATABASE_PASSWORD = 'Sbs298910?123'
@@ -7,5 +8,10 @@ class DevConfig:
     SQLALCHEMY_DATABASE_PORT = '3306'
     SQLALCHEMY_DATABASE_URI = f'mysql://{SQLALCHEMY_DATABASE_USER}:{SQLALCHEMY_DATABASE_PASSWORD}@{SQLALCHEMY_DATABASE_HOST}/{SQLALCHEMY_DATABASE_NAME}'
     
-    
+class TestConfig:
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = 'test_secret_key'
+    JWT_SECRET_KEY = 'test_jwt_secret_key'
     

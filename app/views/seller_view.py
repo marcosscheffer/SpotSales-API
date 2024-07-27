@@ -43,7 +43,7 @@ class SellerView(Resource):
     def get(self, id):
         claims = get_jwt()
         if claims.get("roles", "guest") not in ['admin', 'user']:
-            return "Unauthorized - Only user can access", 403
+            return "Unauthorized - Only admin and user can access", 401
         
         seller = get_seller_by_id_service(id)
         if not seller:

@@ -1,5 +1,6 @@
 class User:
-    def __init__(self, name, email, cpf, password, position_id, active=False, admin=False, bot=False):
+    def __init__(self, name=None, email=None, cpf=None, password=None, position_id=None, 
+                 active=False, admin=False, bot=False):
         self._name = name
         self._email = email
         self._cpf = cpf

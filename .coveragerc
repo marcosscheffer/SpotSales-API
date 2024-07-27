@@ -1,0 +1,12 @@
+[run]
+omit =
+    */migrations/*
+    app/models/*
+    app/entities/*
+    app/schemas/*
+    app/services/*
+    app/validations/*
+    app/cli.py
+    app/extensions.py
+    app/config.py
+    app/__init__.py

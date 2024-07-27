@@ -19,25 +19,31 @@ class UserUpdateView(Resource):
     
     @jwt_required()
     def put(self, id):
-        roles = get_jwt.get("roles", "guest")
-        if roles not in ['admin']:
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin']:
             return "Unauthorized - Only admin and user can access", 401
         
-        us = UserSchema(context={'id': id})
+        us = UserSchema(context={'id': id}, partial=True)
         validate = us.validate(request.json)
         if validate:
             return validate, 400
         
         data = request.get_json()
-        user = User(name=data["name"], email=data["email"], cpf=data["cpf"], 
-                    password=data["password"], position_id=data["position_id"], 
-                    active=data["active"], admin=data["admin"], bot=data["bot"])
+        user = User(name=data.get("name", None),
+                    email=data.get("email", None),
+                    cpf=data.get("cpf", None), 
+                    password=data.get("password", None),
+                    position_id=data.get("position_id", None), 
+                    active=data.get("active", None),
+                    admin=data.get("admin", None),
+                    bot=data.get("bot", None)
+                    )
         response = user_update_service(id, user)
         if isinstance(response, dict):
-            return response, 400
+            return response, 404
         
         return us.dump(response), 200
     
     
-api_v1.add_resource(UserUpdateView, '/user/update/<int:id>')
+api_v1.add_resource(UserUpdateView, '/user/<int:id>')
         

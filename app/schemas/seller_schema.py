@@ -4,6 +4,7 @@ from ..extensions import ma
 from ..models.seller_model import SellerModel
 
 from ..validations.unique_validate import unique_validate
+from ..validations.length_validate import length_validate
 
 class SellerSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -21,4 +22,12 @@ class SellerSchema(ma.SQLAlchemyAutoSchema):
     @validates('id')
     def id_validate(self, value):
         unique_validate(value, SellerModel)
+        
+    @validates('first_name')
+    def first_name_validate(self, value):
+        length_validate(value, min_length=3)
+
+    @validates('last_name')
+    def last_name_validate(self, value):
+        length_validate(value, min_length=3)
     
