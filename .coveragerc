@@ -1,6 +1,7 @@
 [run]
 omit =
     */migrations/*
+    */docs/*
     app/models/*
     app/entities/*
     app/schemas/*
