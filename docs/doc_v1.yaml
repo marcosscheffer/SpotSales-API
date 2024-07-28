@@ -1,0 +1,443 @@
+openapi: 3.0.0
+info:
+  title: SpotSales
+  description: Develop an integrated platform that centralizes and automates the sales process, with internal communication via Slack and a checklist system to ensure quality and compliance. The platform will allow for the control and management of sellers and users, ensuring that only authorized individuals can access specific information and perform relevant actions.
+  version: "1.0"
+  contact:
+    name: Marcos Scheffer
+    email: marcosscheffer.dev@gmail.com
+servers:
+  - url: http://localhost:5000
+paths:
+  /api/v1/leadsSales:
+    get:
+      summary: Retrieve all lead sales
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: A list of lead sales
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LeadSale'
+        "401":
+          description: Unauthorized - Only admin and user can access
+    post:
+      summary: Create a new lead sale
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadSale'
+      responses:
+        "201":
+          description: Lead sale created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadSale'
+        "400":
+          description: Invalid input
+        "401":
+          description: Unauthorized - Only admin and bot can access
+  /api/v1/leadsSales/{id}:
+    get:
+      summary: Retrieve a lead sale by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Lead Sale ID
+      responses:
+        "200":
+          description: Lead sale details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadSale'
+        "401":
+          description: Unauthorized - Only admin and user can access
+        "404":
+          description: Not Found - No Lead
+  /api/v1/positions:
+    get:
+      summary: Retrieve all positions
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: A list of positions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+        "401":
+          description: Unauthorized - Only admin and user can access
+    post:
+      summary: Create a new position
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Position'
+      responses:
+        "201":
+          description: Position created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+        "400":
+          description: Invalid input
+        "401":
+          description: Unauthorized - Only admin can access
+  /api/v1/positions/{id}:
+    get:
+      summary: Retrieve a position by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Position ID
+      responses:
+        "200":
+          description: Position details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+        "401":
+          description: Unauthorized - Only admin and user can access
+        "404":
+          description: Not Found - No Position
+  /api/v1/sellers:
+    get:
+      summary: Retrieve all sellers
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: A list of sellers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Seller'
+        "401":
+          description: Unauthorized - Only admin and user can access
+    post:
+      summary: Create a new seller
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Seller'
+      responses:
+        "201":
+          description: Seller created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Seller'
+        "400":
+          description: Invalid input
+        "401":
+          description: Unauthorized - Only admin can access
+  /api/v1/sellers/{id}:
+    get:
+      summary: Retrieve a seller by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: Seller ID
+      responses:
+        "200":
+          description: Seller details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Seller'
+        "401":
+          description: Unauthorized - Only admin and user can access
+        "404":
+          description: Not Found - No Seller
+  /api/v1/slack/send/message:
+    post:
+      summary: Send a message to Slack
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessage'
+      responses:
+        "200":
+          description: Message sent successfully
+        "400":
+          description: Invalid input
+        "401":
+          description: Unauthorized - Only admin, user and bot can access
+        "500":
+          description: Message not sent
+  /api/v1/slack/send/file/upload:
+    post:
+      summary: Upload a file to Slack
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendFile'
+      responses:
+        "200":
+          description: File uploaded successfully
+        "400":
+          description: Invalid input or no file selected
+        "401":
+          description: Unauthorized - Only admin, user and bot can access
+        "500":
+          description: File not uploaded
+  /api/v1/user/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+      responses:
+        "201":
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Invalid input
+  /api/v1/user/login:
+    post:
+      summary: Login a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        "200":
+          description: User logged in successfully
+        "400":
+          description: Invalid input
+  /api/v1/user/refresh:
+    post:
+      summary: Refresh user token
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Token refreshed successfully
+  /api/v1/user/{id}:
+    get:
+      summary: Retrieve a user by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: User ID
+      responses:
+        "200":
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: Not Found - No user
+        "401":
+          description: Unauthorized - Only admin, user and bot can access
+    put:
+      summary: Update a user by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: User updated successfully
+        "400":
+          description: Invalid input
+        "401":
+          description: Unauthorized - Only admin can access
+        "404":
+          description: Not Found - No user
+components:
+  schemas:
+    LeadSale:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Lead Sale ID
+        sale_date:
+          type: string
+          format: date-time
+          description: Sale date
+        value:
+          type: number
+          description: Sale value
+        seller_id:
+          type: integer
+          description: Seller ID
+    Position:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Position title
+    Seller:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Seller ID
+        first_name:
+          type: string
+          description: First name
+        last_name:
+          type: string
+          description: Last name
+        email:
+          type: string
+          description: Email
+    SendMessage:
+      type: object
+      properties:
+        channel_id:
+          type: string
+          description: Slack channel ID
+        message:
+          type: string
+          description: Message content
+        ts:
+          type: string
+          description: Timestamp (optional)
+    SendFile:
+      type: object
+      properties:
+        channel_id:
+          type: string
+          description: Slack channel ID
+        file:
+          type: string
+          format: binary
+          description: File to upload
+        ts:
+          type: string
+          description: Timestamp (optional)
+    Register:
+      type: object
+      properties:
+        name:
+          type: string
+          description: User's name
+        email:
+          type: string
+          description: User's email
+        cpf:
+          type: string
+          description: User's CPF
+        password:
+          type: string
+          description: User's password
+        position_id:
+          type: integer
+          description: Position ID
+    Login:
+      type: object
+      properties:
+        cpf:
+          type: string
+          description: User's CPF
+        password:
+          type: string
+          description: User's password
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+          description: User's name (optional)
+        email:
+          type: string
+          description: User's email (optional)
+        cpf:
+          type: string
+          description: User's CPF (optional)
+        password:
+          type: string
+          description: User's password (optional)
+        position_id:
+          type: integer
+          description: Position ID (optional)
+        active:
+          type: boolean
+          description: User active status (optional)
+        admin:
+          type: boolean
+          description: User admin status (optional)
+        bot:
+          type: boolean
+          description: User bot status (optional)
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

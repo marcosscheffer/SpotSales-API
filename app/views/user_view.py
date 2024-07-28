@@ -10,7 +10,12 @@ from ..entities.user import User
 
 class UserUpdateView(Resource):
     
+    @jwt_required()
     def get(self, id):
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin']:
+            return "Unauthorized - Only admin and user can access", 401
+        
         us = UserSchema()
         user = get_user_by_id(id)
         if not user:

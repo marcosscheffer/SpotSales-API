@@ -88,7 +88,7 @@ Once you have set up the environment and dependencies, you can start the API in 
 flask run
 ```
 
-use the API at the following URL `http://127.0.0.1:8000`.
+use the API at the following URL `http://127.0.0.1:5000`.
 
 ## Code Coverage
 
@@ -226,6 +226,8 @@ SpotSales-API/
 │   ├── test_slack_view.py
 │   ├── test_user_auth_view.py
 │   ├── test_user_view.py
+├── docs/
+│   ├── doc_v1.yaml
 ├── migrations/
 ├── .env
 ├── .coveragerc
