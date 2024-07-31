@@ -15,7 +15,7 @@ class LeadsSalesView(Resource):
     def get(self):
         claims = get_jwt()
         if claims.get("roles", "guest") not in ['admin', 'user']:
-            return "Unauthorized - Only admin and user can access", 401
+            return "Unauthorized - Only admin and user can access", 403
         
         leads_sales = get_leads_sales_service()
         lss = LeadSaleSchema(many=True)
@@ -26,7 +26,7 @@ class LeadsSalesView(Resource):
     def post(self):
         claims = get_jwt()
         if claims.get("roles", "guest") not in ['admin', 'bot']:
-            return "Unauthorized - Only admin and user can access", 401
+            return "Unauthorized - Only admin and user can access", 403
         
         lss = LeadSaleSchema()
         validate = lss.validate(request.json)
@@ -52,7 +52,7 @@ class LeadSaleView(Resource):
     def get(self, id):
         claims = get_jwt()
         if claims.get("roles", "guest") not in ['admin', 'user']:
-            return "Unauthorized - Only admin and user can access", 401
+            return "Unauthorized - Only admin and user can access", 403
         
         lead_sale = get_lead_sale_by_id_service(id)
         if not lead_sale:

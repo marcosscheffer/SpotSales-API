@@ -38,6 +38,9 @@ def user_refresh_service(identity):
 def get_user_by_id(user_id):
     return UserModel.query.get(user_id)
 
+def get_users():
+    return UserModel.query.all()
+
     
     
     

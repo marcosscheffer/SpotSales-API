@@ -4,7 +4,7 @@ from flask import request
 
 from ..extensions import api_v1
 from ..services.user_service import user_update_service
-from ..services.user_auth_service import get_user_by_id
+from ..services.user_auth_service import get_user_by_id, get_users
 from ..schemas.user_schema import UserSchema
 from ..entities.user import User
 
@@ -14,7 +14,7 @@ class UserUpdateView(Resource):
     def get(self, id):
         claims = get_jwt()
         if claims.get("roles", "guest") not in ['admin']:
-            return "Unauthorized - Only admin and user can access", 401
+            return "Unauthorized - Only admin and user can access", 403
         
         us = UserSchema()
         user = get_user_by_id(id)
@@ -26,7 +26,7 @@ class UserUpdateView(Resource):
     def put(self, id):
         claims = get_jwt()
         if claims.get("roles", "guest") not in ['admin']:
-            return "Unauthorized - Only admin and user can access", 401
+            return "Unauthorized - Only admin and user can access", 403
         
         us = UserSchema(context={'id': id}, partial=True)
         validate = us.validate(request.json)
@@ -57,6 +57,17 @@ class UserView(Resource):
         us = UserSchema()
         user = get_user_by_id(user_id)
         return us.dump(user), 200
+    
+class UsersView(Resource):
+    @jwt_required()
+    def get(self):
+        claims = get_jwt()
+        if claims.get("roles", "guest") not in ['admin']:
+            return "Unauthorized - Only admin and user can access", 403
+        
+        us = UserSchema(many=True)
+        users = get_users()
+        return us.dump(users), 200
 
         
     

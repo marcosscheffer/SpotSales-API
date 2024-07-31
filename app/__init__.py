@@ -17,7 +17,7 @@ from .views.slack_view import SendFilesView, SendMessageView
 from .views.position_view import PositionsView, PositionView
 from .views.user_auth_view import (UserRegisterView, UserLoginView, 
                                    UserRefreshView)
-from .views.user_view import UserUpdateView
+from .views.user_view import UserUpdateView, UserView
 
 
 def create_app(config):

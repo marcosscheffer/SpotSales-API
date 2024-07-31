@@ -22,7 +22,7 @@ class SendMessageView(Resource):
     def post(self):
         claims = get_jwt()
         if claims.get("roles", "guest") not in ['admin', 'user', 'bot']:
-            return "Unauthorized - Only admin, user and bot can access", 401
+            return "Unauthorized - Only admin, user and bot can access", 403
         
         sms = SendMessageSchema()
         validate = sms.validate(request.json)
@@ -49,7 +49,7 @@ class SendFilesView(Resource):
     def post(self):
         claims = get_jwt()
         if claims.get("roles", "guest") not in ['admin', 'user', 'bot']:
-            return "Unauthorized - Only admin, user and bot can access", 401
+            return "Unauthorized - Only admin, user and bot can access", 3
         
         sfs = SendFileSchema()
         validate = sfs.validate(request.form)

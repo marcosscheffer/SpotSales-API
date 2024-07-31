@@ -10,12 +10,7 @@ from ..entities.position import Position
 
 
 class PositionsView(Resource):
-    @jwt_required()
     def get(self):
-        claims = get_jwt()
-        if claims.get("roles", "guest") not in ['admin', 'user']:
-            return "Unauthorized - Only admin and user can access", 401
-        
         positions = get_positions_service()
         ps = PositionSchema(many=True)
         response = ps.dump(positions)
@@ -25,7 +20,7 @@ class PositionsView(Resource):
     def post(self):
         claims = get_jwt()
         if claims.get("roles", "guest") not in ['admin']:
-            return "Unauthorized - Only admin can access", 401
+            return "Unauthorized - Only admin can access", 403
         
         ps = PositionSchema()
         validate = ps.validate(request.json)
@@ -42,7 +37,7 @@ class PositionView(Resource):
     def get(self, id):
         claims = get_jwt()
         if claims.get("roles", "guest") not in ['admin', 'user']:
-            return "Unauthorized - Only admin and user can access", 401
+            return "Unauthorized - Only admin and user can access", 403
         
         position = get_position_by_id_service(id)
         if not position:
