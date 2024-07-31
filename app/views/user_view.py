@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask_jwt_extended import jwt_required, get_jwt
+from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity
 from flask import request
 
 from ..extensions import api_v1
@@ -49,6 +49,18 @@ class UserUpdateView(Resource):
         
         return us.dump(response), 200
     
+
+class UserView(Resource):
+    @jwt_required()
+    def get(self):
+        user_id = get_jwt_identity()
+        us = UserSchema()
+        user = get_user_by_id(user_id)
+        return us.dump(user), 200
+
+        
+    
     
 api_v1.add_resource(UserUpdateView, '/user/<int:id>')
+api_v1.add_resource(UserView, '/user/me')
         

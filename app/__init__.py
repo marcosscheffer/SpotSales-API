@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 
 from .extensions import api_v1, db, ma, migrate, jwt
 
@@ -21,8 +22,8 @@ from .views.user_view import UserUpdateView
 
 def create_app(config):
     app = Flask(__name__)
+    CORS(app)
     app.config.from_object(config)
-    
     api_v1.init_app(app)
     db.init_app(app)
     ma.init_app(app)
