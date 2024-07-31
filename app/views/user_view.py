@@ -74,4 +74,5 @@ class UsersView(Resource):
     
 api_v1.add_resource(UserUpdateView, '/user/<int:id>')
 api_v1.add_resource(UserView, '/user/me')
+api_v1.add_resource(UsersView, '/user')
         
