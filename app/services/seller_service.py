@@ -6,6 +6,9 @@ from ..entities.seller import Seller
 def get_sellers_service():
     return SellerModel.query.all()
 
+def get_seller_by_email_service(email):
+    return SellerModel.query.filter_by(email=email).first()
+
 def get_seller_by_id_service(id: int):
     return SellerModel.query.get(id)
 

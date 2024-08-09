@@ -9,6 +9,7 @@ from .models.seller_model import SellerModel
 from .models.checklist_model import ChecklistModel
 from .models.user_model import UserModel
 from .models.position_model import PositionModel
+from .models.lead_model import LeadModel
 
 # Add Resources
 from .views.lead_sale_view import LeadsSalesView, LeadSaleView
@@ -18,6 +19,7 @@ from .views.position_view import PositionsView, PositionView
 from .views.user_auth_view import (UserRegisterView, UserLoginView, 
                                    UserRefreshView)
 from .views.user_view import UserUpdateView, UserView
+from .views.webhook_view import LeadSoldWebhookView
 
 
 def create_app(config):
