@@ -22,7 +22,12 @@ from .views.user_view import UserUpdateView, UserView
 
 def create_app(config):
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, resources={
+        r"/*": {"origins": "*",
+                "methods": ["GET", "POST", "PUT", "DELETE", "PATCH"],
+                "allow_headers": ["Content-Type", "Authorization", "X-Requested-With"]
+                }
+    })
     app.config.from_object(config)
     api_v1.init_app(app)
     db.init_app(app)

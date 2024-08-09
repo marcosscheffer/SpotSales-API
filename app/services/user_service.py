@@ -20,7 +20,7 @@ def user_update_service(id: int, user: User):
             user_db.encrypt_password()
     if user.position_id:
         user_db.position_id = user.position_id
-    if user.active:
+    if user.active != None:
         user_db.active = user.active
     if user.admin:
         user_db.admin = user.admin
