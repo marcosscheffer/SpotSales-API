@@ -10,7 +10,7 @@ def get_lead_by_id_service(id: int):
     return LeadModel.query.get(id)
 
 def register_lead_service(data: Lead):
-    lead_db = LeadModel(id=data.id, 
+    lead_db = LeadModel(id=data.id,
                              phone1=data.phone1, 
                              phone2=data.phone2, 
                              company=data.company,

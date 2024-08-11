@@ -12,13 +12,15 @@ class LeadSaleSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = LeadSaleModel
         load_instance = True
-        fields = ('id','sale_date', 'value', 'seller_id', 'created_at', 'updated_at', 'active')
+        fields = ('id', 'company', 'sale_date', 'value', 'seller_id', 'ts', 'created_at', 'updated_at', 'active')
         
     
     id = fields.Int(required=True)
+    company = fields.String(required=True)
     sale_date = fields.DateTime(required=True)
     value = fields.Float(required=True)
     seller_id = fields.Int(required=True)
+    ts = fields.String(required=True)
     
     
     @validates('id')

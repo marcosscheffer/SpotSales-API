@@ -17,16 +17,17 @@ from ..entities.lead import Lead
 from ..entities.lead_sale import LeadSale
 
 def create_message_sold(data):
-    seller_name = get_seller_by_id_service(data.seller_id)
-    date_obj = datetime.strptime(data.sale_date, "%Y-%m-%dT%H:%M:%S")
+    date_obj = datetime.strptime(data["Sale"].get("SaleDate", '0000-00-00T00:00:00'), "%Y-%m-%dT%H:%M:%S")
     formatted_date = date_obj.strftime("%d/%m/%Y %H:%M:%S")
+    
     message = f"""
-    ----------------------------------
-    Sold Lead:
-    - ID: {data.id}
-    - Vendedor: {seller_name.first_name} {seller_name.last_name}
+    --------------------------------------------------
+    - *Nova Venda*
+    - ID: {data["Sale"].get("LeadId", None)}
+    - Cliente: {data["Lead"].get("Company", None)}
+    - Vendedor: {data["Sale"]["SalesRep"].get("Name", None)} {data["Sale"]["SalesRep"].get("LastName", None)}
     - Data da Venda: {formatted_date}
-    - Valor: R$ {data.value}
+    - Valor: R$ {data["Sale"].get("TotalDealValue", None)}
     - Checklist: {CHECKLIST_URL}
     """
     
@@ -67,32 +68,35 @@ class LeadWebhookView(Resource):
 class LeadSoldWebhookView(Resource):
     def post(self):
         data = request.get_json()
+        
+        #send sold message to slack channel
+        message = create_message_sold(data)
+        response_message = send_message_service(client, SLACK_CHANNEL, message)
+        #send whatsapp url to ts of message sold
+        message_whatsapp_url = "https://wa.me/"
+        send_message_service(client, SLACK_CHANNEL, message_whatsapp_url, response_message["ts"])
+        
         seller = get_seller_by_email_service(data["Sale"]["SalesRep"].get("Email", None))
-        print(seller.id)
         data_lead = {"id": data["Sale"].get("LeadId", None),
+                     "company": data["Lead"].get("Company", None),
                      "sale_date": data["Sale"].get("SaleDate", None),
                      "seller_id": seller.id,
-                     "value": data["Sale"].get("TotalDealValue", None)
+                     "value": data["Sale"].get("TotalDealValue", None),
+                     "ts": response_message["ts"]
                      }
         
         
         lss = LeadSaleSchema()
         validate = lss.validate(data_lead)
         if validate:
-            print(validate)
             return validate, 400
         lead = LeadSale(id=data_lead["id"],
+                        company=data_lead["company"],
                         sale_date=data_lead["sale_date"],
                         seller_id=seller.id,
-                        value=data_lead["value"]
+                        value=data_lead["value"],
+                        ts=data_lead["ts"]
                         )
-        
-        #send sold message to slack channel
-        message = create_message_sold(lead)
-        response_slack = send_message_service(client, SLACK_CHANNEL, message)
-        #send whatsapp url to ts of message sold
-        message_whatsapp_url = "https://wa.me/"
-        send_message_service(client, SLACK_CHANNEL, message_whatsapp_url, response_slack["ts"])
         
         response = register_lead_sale_service(lead)
         return lss.dump(response), 201
