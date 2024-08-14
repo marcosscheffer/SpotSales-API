@@ -9,7 +9,7 @@ class Checklist():
                  special_project=None,
                  eletric_key=False,
                  eletric_panel=False,
-                 description=None,
+                 description_panel=None,
                  layout=False,
                  pipeline=False,
                  special_paint=False,
@@ -31,7 +31,7 @@ class Checklist():
         self._special_project = special_project
         self._eletric_key = eletric_key
         self._eletric_panel = eletric_panel
-        self._description = description
+        self._description_panel = description_panel
         self._layout = layout
         self._pipeline = pipeline
         self._special_paint = special_paint
@@ -125,12 +125,12 @@ class Checklist():
         self._eletric_panel = eletric_panel
         
     @property
-    def description(self):
-        return self._description
+    def description_panel(self):
+        return self._description_panel
     
-    @description.setter
-    def description(self, description):
-        self._description = description
+    @description_panel.setter
+    def description(self, description_panel):
+        self._description_panel = description_panel
         
     
     @property

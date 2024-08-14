@@ -22,9 +22,9 @@ def user_update_service(id: int, user: User):
         user_db.position_id = user.position_id
     if user.active != None:
         user_db.active = user.active
-    if user.admin:
+    if user.admin != None:
         user_db.admin = user.admin
-    if user.bot:
+    if user.bot != None:
         user_db.bot = user.bot
     db.session.commit()
     

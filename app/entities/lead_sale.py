@@ -1,11 +1,12 @@
 class LeadSale:
-    def __init__(self, id, company, sale_date, value, seller_id, ts):
+    def __init__(self, id, company, sale_date, value, seller_id, ts, filled=None):
         self._id = id
         self._sale_date = sale_date
         self._value = value
         self._seller_id = seller_id
         self._company = company
         self._ts = ts
+        self._filled = filled
         
     
     @property
@@ -61,5 +62,14 @@ class LeadSale:
     @ts.setter
     def ts(self, ts):
         self._ts = ts
+        
+        
+    @property
+    def filled(self):
+        return self._filled
+    
+    @filled.setter
+    def filled(self, filled):
+        self._filled = filled
         
     

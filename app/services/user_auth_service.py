@@ -27,6 +27,9 @@ def user_login_service(login, password):
     if not user_db or not user_db.verify_password(password):
         return {"message": "Credentials invalid"}
     
+    if not user_db.active:
+        return {"message": "User not active"}
+    
     tokens = gen_tokens(user_db.id, 100)
     return {**tokens, 'message': "Login successful"}
 

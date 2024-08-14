@@ -8,7 +8,6 @@ from ..services.lead_sale_service import (get_leads_sales_service, register_lead
                                           get_lead_sale_by_id_service)
 from ..services.seller_service import get_seller_by_id_service
 from ..schemas.lead_sale_schema import LeadSaleSchema
-from ..entities.lead_sale import LeadSale
 
 
 class LeadsSalesView(Resource):

@@ -20,7 +20,7 @@ from .views.user_auth_view import (UserRegisterView, UserLoginView,
                                    UserRefreshView)
 from .views.user_view import UserUpdateView, UserView
 from .views.webhook_view import LeadSoldWebhookView
-
+from .views.checklist_view import ChecklistsView
 
 def create_app(config):
     app = Flask(__name__)
