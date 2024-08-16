@@ -25,7 +25,8 @@ class ChecklistsView(Resource):
         checklist = Checklist(id=data["id"],
                               seller_id=data.get("seller_id", 0),
                               sale_date=data.get("sale_date", "0000-00-00T00:00:00"),
-                              value=data.get("value", 0))
+                              value=data.get("value", 0),
+                              ts=data.get("ts", ""))
         
         response = register_checklist_service(checklist)
         
@@ -47,13 +48,14 @@ class ChecklistView(Resource):
         if validate:
             return validate, 400
         
+        print(data)
         checklist = Checklist(phases=data.get('phases'),
                               voltage=data.get('voltage'),
                               power=data.get('power'),
                               special_project=data.get('special_project'),
                               eletric_key=data.get('eletric_key'),
                               eletric_panel=data.get('eletric_panel'),
-                              description_panel=data.get('description'),
+                              description=data.get('description'),
                               layout=data.get('layout'),
                               pipeline=data.get('pipeline'),
                               special_paint=data.get('special_paint'),

@@ -17,6 +17,7 @@ class ChecklistSchema(ma.SQLAlchemyAutoSchema):
     seller_id = fields.Int(required=True)
     sale_date = fields.DateTime(required=True)
     value = fields.Float(required=True)
+    ts = fields.String(required=True)
     
     # equipments
     phases = fields.Int(required=False)

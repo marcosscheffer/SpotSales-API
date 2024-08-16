@@ -1,15 +1,15 @@
 class Checklist():
-    def __init__(self, id,
-                 seller_id,
-                 sale_date,
-                 value,
+    def __init__(self, id=None,
+                 seller_id=None,
+                 sale_date=None,
+                 value=None,
                  phases=None,
                  voltage=None,
                  power=None,
                  special_project=None,
                  eletric_key=False,
                  eletric_panel=False,
-                 description_panel=None,
+                 description=None,
                  layout=False,
                  pipeline=False,
                  special_paint=False,
@@ -20,7 +20,8 @@ class Checklist():
                  address=None,
                  deadline=None,
                  other=None,
-                 filled=None):
+                 filled=None,
+                 ts=None):
         self._id = id
         self._seller_id = seller_id
         self._sale_date = sale_date
@@ -31,7 +32,7 @@ class Checklist():
         self._special_project = special_project
         self._eletric_key = eletric_key
         self._eletric_panel = eletric_panel
-        self._description_panel = description_panel
+        self._description = description
         self._layout = layout
         self._pipeline = pipeline
         self._special_paint = special_paint
@@ -43,6 +44,7 @@ class Checklist():
         self._deadline = deadline
         self._other = other
         self._filled = filled
+        self._ts = ts
         
     @property
     def id(self):
@@ -125,12 +127,12 @@ class Checklist():
         self._eletric_panel = eletric_panel
         
     @property
-    def description_panel(self):
-        return self._description_panel
+    def description(self):
+        return self._description
     
-    @description_panel.setter
-    def description(self, description_panel):
-        self._description_panel = description_panel
+    @description.setter
+    def description(self, description):
+        self._description = description
         
     
     @property
@@ -195,12 +197,12 @@ class Checklist():
         self._pallet = pallet
         
     @property
-    def adress(self):
-        return self._adress
+    def address(self):
+        return self._address
     
-    @adress.setter
-    def adress(self, adress):
-        self._adress = adress
+    @address.setter
+    def address(self, address):
+        self._address = address
         
     
     @property
@@ -229,4 +231,11 @@ class Checklist():
     def filled(self, filled):
         self._filled = filled
         
+    @property
+    def ts(self):
+        return self._ts
+    
+    @ts.setter
+    def ts(self, ts):
+        self._ts = ts
     

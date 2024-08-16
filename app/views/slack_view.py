@@ -16,6 +16,8 @@ signing_secret = os.environ.get('SLACK_SIGNING_SECRET')
 client = WebClient(token=bot_token)
 signature_verifier = SignatureVerifier(signing_secret=signing_secret)
 
+CHANNEL_ID = os.environ.get('SLACK_CHANNEL', None)
+
 
 class SendMessageView(Resource):
     @jwt_required()
@@ -31,10 +33,10 @@ class SendMessageView(Resource):
         
         data = request.get_json()
         if 'ts' in data:
-            response = send_message_service(client, data["channel_id"], 
+            response = send_message_service(client, CHANNEL_ID, 
                                             data["message"], data["ts"])
         else:
-            response = send_message_service(client, data["channel_id"], 
+            response = send_message_service(client, CHANNEL_ID, 
                                             data["message"])
 
         if response["success"]:
@@ -54,6 +56,7 @@ class SendFilesView(Resource):
         sfs = SendFileSchema()
         validate = sfs.validate(request.form)
         if validate:
+            print(validate)
             return validate, 400
         
         file = request.files.get('file')
@@ -62,10 +65,10 @@ class SendFilesView(Resource):
         
         data = request.form.to_dict()
         if 'ts' in data:
-            response = send_file_service(client, data["channel_id"], 
+            response = send_file_service(client, CHANNEL_ID, 
                                          file, data["ts"])
         else:
-            response = send_file_service(client, data["channel_id"], 
+            response = send_file_service(client, CHANNEL_ID, 
                                          file)
         
         if response["success"]:

@@ -8,6 +8,7 @@ def register_checklist_service(checklist: Checklist):
                    seller_id=checklist.seller_id,
                    sale_date=checklist.sale_date,
                    value=checklist.value,
+                   ts=checklist.ts
                    )
     
     db.session.add(checklist_db)
@@ -28,8 +29,8 @@ def update_checklist_service(checklist: Checklist, id: int):
         checklist_db.eletric_key = checklist.eletric_key
     if checklist.eletric_panel != None:
         checklist_db.eletric_panel = checklist.eletric_panel
-    if checklist.description_panel != None:
-        checklist_db.description_panel = checklist.description_panel
+    if checklist.description != None:
+        checklist_db.description = checklist.description
     if checklist.layout!= None:
         checklist_db.layout = checklist.layout
         
@@ -48,8 +49,8 @@ def update_checklist_service(checklist: Checklist, id: int):
         checklist_db.freight = checklist.freight
     if checklist.pallet!= None:
         checklist_db.pallet = checklist.pallet
-    if checklist.adress!= None:
-        checklist_db.adress = checklist.adress
+    if checklist.address!= None:
+        checklist_db.address = checklist.address
     if checklist.deadline!= None:
         checklist_db.deadline = checklist.deadline
     

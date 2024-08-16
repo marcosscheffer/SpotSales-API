@@ -9,6 +9,7 @@ class ChecklistModel(BaseModel):
     seller_id = db.Column(db.Integer, db.ForeignKey('sellers.id'), nullable=False)
     sale_date = db.Column(db.Date, nullable=False)
     value = db.Column(db.Float, nullable=False)
+    ts = db.Column(db.String(20), nullable=False)
     
     # equipment
     phases = db.Column(db.Integer, nullable=True)
