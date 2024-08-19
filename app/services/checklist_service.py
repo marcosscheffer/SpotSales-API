@@ -29,26 +29,32 @@ def update_checklist_service(checklist: Checklist, id: int):
         checklist_db.eletric_key = checklist.eletric_key
     if checklist.eletric_panel != None:
         checklist_db.eletric_panel = checklist.eletric_panel
-    if checklist.description != None:
-        checklist_db.description = checklist.description
+    if checklist.description_panel != None:
+        checklist_db.description_panel = checklist.description_panel
     if checklist.layout!= None:
         checklist_db.layout = checklist.layout
         
         
     if checklist.pipeline!= None:
         checklist_db.pipeline = checklist.pipeline
+    if checklist.description_pipeline!= None:
+        checklist_db.description_pipeline = checklist.description_pipeline
     if checklist.special_paint != None:
         checklist_db.special_paint = checklist.special_paint
     if checklist.extra_filters!= None:
         checklist_db.extra_filters = checklist.extra_filters
     if checklist.assembly!= None:
         checklist_db.assembly = checklist.assembly
+    if checklist.responsible_assembly!= None:
+        checklist_db.responsible_assembly = checklist.responsible_assembly
         
     
     if checklist.freight!= None:
         checklist_db.freight = checklist.freight
     if checklist.pallet!= None:
         checklist_db.pallet = checklist.pallet
+    if checklist.type_address!= None:
+        checklist_db.type_address = checklist.type_address
     if checklist.address!= None:
         checklist_db.address = checklist.address
     if checklist.deadline!= None:

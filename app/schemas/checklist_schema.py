@@ -31,14 +31,17 @@ class ChecklistSchema(ma.SQLAlchemyAutoSchema):
     
     # pipeline
     pipeline = fields.Boolean(required=False)
+    description_pipeline = fields.String(required=False)
     special_paint = fields.Boolean(required=False)
     extra_filters = fields.Boolean(required=False)
-    assembly = fields.String(required=False)
+    assembly = fields.Boolean(required=False)
+    responsible_assembly = fields.String(required=False)
 
     # delivery
     freight = fields.String(required=False)
     pallet = fields.Boolean(required=False)
-    adress = fields.String(required=False)
+    address = fields.String(required=False)
+    type_address = fields.String(required=False)
     deadline = fields.Date(required=False)
     
     # final

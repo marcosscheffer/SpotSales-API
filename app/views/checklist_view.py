@@ -46,6 +46,7 @@ class ChecklistView(Resource):
         data = request.get_json()
         validate = cs.validate(data)
         if validate:
+            print(validate)
             return validate, 400
         
         print(data)
@@ -55,14 +56,17 @@ class ChecklistView(Resource):
                               special_project=data.get('special_project'),
                               eletric_key=data.get('eletric_key'),
                               eletric_panel=data.get('eletric_panel'),
-                              description=data.get('description'),
+                              description_panel=data.get('description_panel'),
                               layout=data.get('layout'),
                               pipeline=data.get('pipeline'),
+                              description_pipeline=data.get('description_pipeline'),
                               special_paint=data.get('special_paint'),
                               extra_filters=data.get('extra_filters'),
                               assembly=data.get('assembly'),
+                              responsible_assembly=data.get('responsible_assembly'),
                               freight=data.get('freight'),
                               pallet=data.get('pallet'),
+                              type_address=data.get('type_address'),
                               address=data.get('address'),
                               deadline=data.get('deadline'),
                               other=data.get('other'),

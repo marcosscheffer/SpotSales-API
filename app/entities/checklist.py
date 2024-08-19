@@ -9,14 +9,17 @@ class Checklist():
                  special_project=None,
                  eletric_key=False,
                  eletric_panel=False,
-                 description=None,
+                 description_panel=None,
                  layout=False,
                  pipeline=False,
+                 description_pipeline=None,
                  special_paint=False,
                  extra_filters=False,
                  assembly=None,
+                 responsible_assembly=None,
                  freight=None,
                  pallet=False,
+                 type_address=None,
                  address=None,
                  deadline=None,
                  other=None,
@@ -32,14 +35,17 @@ class Checklist():
         self._special_project = special_project
         self._eletric_key = eletric_key
         self._eletric_panel = eletric_panel
-        self._description = description
+        self._description_panel = description_panel
         self._layout = layout
         self._pipeline = pipeline
+        self._description_pipeline = description_pipeline
         self._special_paint = special_paint
         self._extra_filters = extra_filters
         self._assembly = assembly
+        self._responsible_assembly = responsible_assembly
         self._freight = freight
         self._pallet = pallet
+        self._type_address = type_address
         self._address = address
         self._deadline = deadline
         self._other = other
@@ -127,12 +133,12 @@ class Checklist():
         self._eletric_panel = eletric_panel
         
     @property
-    def description(self):
-        return self._description
+    def description_panel(self):
+        return self._description_panel
     
-    @description.setter
-    def description(self, description):
-        self._description = description
+    @description_panel.setter
+    def description_panel(self, description_panel):
+        self._description_panel = description_panel
         
     
     @property
@@ -151,6 +157,14 @@ class Checklist():
     @pipeline.setter
     def pipeline(self, pipeline):
         self._pipeline = pipeline
+        
+    @property
+    def description_pipeline(self):
+        return self._description_pipeline
+    
+    @description_pipeline.setter
+    def description_pipeline(self, description_pipeline):
+        self._description_pipeline = description_pipeline
         
     
     @property
@@ -178,6 +192,14 @@ class Checklist():
     def assembly(self, assembly):
         self._assembly = assembly
         
+    @property
+    def responsible_assembly(self):
+        return self._responsible_assembly
+    
+    @responsible_assembly.setter
+    def responsible_assembly(self, responsible_assembly):
+        self._responsible_assembly = responsible_assembly
+        
     
     @property
     def freight(self):
@@ -195,6 +217,14 @@ class Checklist():
     @pallet.setter
     def pallet(self, pallet):
         self._pallet = pallet
+        
+    @property
+    def type_address(self):
+        return self._type_address
+    
+    @type_address.setter
+    def type_address(self, type_address):
+        self._type_address = type_address    
         
     @property
     def address(self):

@@ -8,6 +8,8 @@ from ..services.lead_sale_service import (get_leads_sales_service, register_lead
                                           get_lead_sale_by_id_service)
 from ..services.seller_service import get_seller_by_id_service
 from ..schemas.lead_sale_schema import LeadSaleSchema
+from ..paginate import paginate
+from ..models.lead_sale_model import LeadSaleModel
 
 
 class LeadsSalesView(Resource):
@@ -16,14 +18,8 @@ class LeadsSalesView(Resource):
         claims = get_jwt()
         if claims.get("roles", "guest") not in ['admin', 'user']:
             return "Unauthorized - Only admin and user can access", 403
-        
-        leads_sales = get_leads_sales_service()
         lss = LeadSaleSchema(many=True)
-        response = lss.dump(leads_sales)
-        for lead in response:
-            seller = get_seller_by_id_service(lead.get("seller_id", None))
-            lead["seller_name"] = f"{seller.first_name} {seller.last_name}"
-        return response, 200
+        return paginate(LeadSaleModel, lss)
     
 
 class LeadSaleView(Resource):
