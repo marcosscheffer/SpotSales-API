@@ -16,9 +16,11 @@ from ..schemas.lead_sale_schema import LeadSaleSchema
 from ..entities.lead import Lead
 from ..entities.lead_sale import LeadSale
 
-def create_message_sold(data):
+def create_message_sold(data, filter=False):
     date_obj = datetime.strptime(data["Sale"].get("SaleDate", '0000-00-00T00:00:00'), "%Y-%m-%dT%H:%M:%S")
     formatted_date = date_obj.strftime("%d/%m/%Y %H:%M:%S")
+    print(filter)
+    
     
     message = f"""
     --------------------------------------------------
@@ -28,7 +30,7 @@ def create_message_sold(data):
     - Vendedor: {data["Sale"]["SalesRep"].get("Name", None)} {data["Sale"]["SalesRep"].get("LastName", None)}
     - Data da Venda: {formatted_date}
     - Valor: R$ {data["Sale"].get("TotalDealValue", None)}
-    - Checklist: {CHECKLIST_URL}{data["Sale"].get("LeadId", None)}
+    - Checklist: {CHECKLIST_URL}{"/filter/" if filter else "/" }{data["Sale"].get("LeadId", None)}
     """
     
     return message
@@ -68,11 +70,16 @@ class LeadWebhookView(Resource):
 class LeadSoldWebhookView(Resource):
     def post(self):
         data = request.get_json()
+        filter_checklist = False
+    
+        # Provisor solution for products of filters
+        for product in data["Sale"].get("Products", []):
+            filter_checklist = True if product.get("name") == "Filtros" else False
         
         #send sold message to slack channel
-        message = create_message_sold(data)
+        message = create_message_sold(data, filter_checklist)
         response_message = send_message_service(client, SLACK_CHANNEL, message)
-        print(SLACK_BOT_TOKEN)
+        
         #send whatsapp url to ts of message sold
         if response_message["success"]:
             message_whatsapp_url = "https://wa.me/"
@@ -84,7 +91,8 @@ class LeadSoldWebhookView(Resource):
                      "sale_date": data["Sale"].get("SaleDate", None),
                      "seller_id": seller.id,
                      "value": data["Sale"].get("TotalDealValue", None),
-                     "ts": response_message.get("ts")
+                     "ts": response_message.get("ts"),
+                     "filter": filter_checklist
                      }
         
         
@@ -97,7 +105,8 @@ class LeadSoldWebhookView(Resource):
                         sale_date=data_lead["sale_date"],
                         seller_id=seller.id,
                         value=data_lead["value"],
-                        ts=data_lead["ts"]
+                        ts=data_lead["ts"],
+                        filter=data_lead["filter"]
                         )
         
         response = register_lead_sale_service(lead)

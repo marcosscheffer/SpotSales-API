@@ -16,7 +16,8 @@ def register_lead_sale_service(data: lead_sale):
                                 sale_date=data.sale_date,                          
                                 value=data.value, 
                                 seller_id=data.seller_id,
-                                ts=data.ts)
+                                ts=data.ts,
+                                filter=data.filter)
     db.session.add(lead_sale_db)
     db.session.commit()
     return lead_sale_db

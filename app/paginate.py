@@ -1,14 +1,21 @@
 from flask import request, url_for
-from sqlalchemy import or_
+from sqlalchemy import or_, func
+from datetime import datetime
 
 def paginate(model, schema):
     page = int(request.args.get('page', 1))
     per_page = int(request.args.get('per_page', 10))
     q = request.args.get("q", None)
+    date = request.args.get('date', None)
+    
     
 
     query = model.query
 
+    if date:
+        date_filter = datetime.strptime(date, '%Y-%m-%d').date()
+        query = query.filter(func.date(model.created_at) == date_filter)
+    
     if q:
         filters = []
         for column in model.__table__.columns:
@@ -20,10 +27,10 @@ def paginate(model, schema):
         
 
     
+    if hasattr(model, 'created_at'):
+        query = query.order_by(model.created_at.desc())
         
     page_obj = query.paginate(page=page, per_page=per_page)
-
-    
     
     next = url_for(
         request.endpoint,

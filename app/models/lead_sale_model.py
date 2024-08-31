@@ -9,6 +9,7 @@ class LeadSaleModel(BaseModel):
     sale_date = db.Column(db.DateTime, nullable=False)
     value = db.Column(db.Float, nullable=False)
     ts = db.Column(db.String(20), nullable=False)
+    filter = db.Column(db.Boolean, nullable=False)
     filled = db.Column(db.Boolean, nullable=True)
     
     seller_id = db.Column(db.Integer, db.ForeignKey('sellers.id'), nullable=False)

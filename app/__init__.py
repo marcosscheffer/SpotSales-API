@@ -10,6 +10,9 @@ from .models.checklist_model import ChecklistModel
 from .models.user_model import UserModel
 from .models.position_model import PositionModel
 from .models.lead_model import LeadModel
+from .models.product_model import ProductModel
+from .models.filter_op_model import FilterOpModel
+from .models.products_solds_model import ProductsSoldsModel
 
 # Add Resources
 from .views.lead_sale_view import LeadsSalesView, LeadSaleView
